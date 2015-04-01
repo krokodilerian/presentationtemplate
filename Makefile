@@ -1,17 +1,26 @@
 
-NAME=stok
+TARGETS=$(patsubst %.pandoc,%.pdf,$(wildcard *.pandoc)) $(patsubst %.pandoc,%-blog.txt,$(wildcard *.pandoc))
 
-TARGETS=$(NAME).pdf $(NAME).notes.pdf $(NAME)-blog.txt
+all: depend $(TARGETS)
 
-all: $(TARGETS)
+depend: .depend
 
-$(NAME).pdf: $(NAME).pandoc beamer.my beamercolorthemekrok.sty
-	pandoc --slide-level 2 -t beamer $(NAME).pandoc --template beamer.my -V theme:Warsaw -V fonttheme:structurebold -V colortheme:krok -o $(NAME).pdf
+.depend: $(wildcard *.pandoc) makedep.sh
+	rm -f .depend
+	./makedep.sh > .depend
 
-$(NAME).notes.pdf: $(NAME).pandoc
-	a2ps -B -o - -r --columns=2 $(NAME).pandoc | ps2pdf - $(NAME).notes.pdf
+-include .depend
 
-$(NAME)-blog.txt: $(NAME).pandoc
-	php etxt.php $(NAME).pandoc > $(NAME)-blog.txt
+%.pdf: %.pandoc beamer.my beamercolorthemekrok.sty
+	pandoc --slide-level 3 -t beamer $< --template beamer.my -V theme:Warsaw -V fonttheme:structurebold -V colortheme:krok -o $@
+
+%.png: img/%.png
+	./mkimg.sh $@
+
+%-blog.txt: %.pandoc
+	php etxt.php $< > $@
 clean:
-	rm -f $(TARGETS)
+	rm -f $(TARGETS) *.png .depend
+
+push:
+	git push origin master
