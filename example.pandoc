@@ -1,0 +1,74 @@
+% Example presentation
+% how my build works with pandoc
+% Vasil Kolev \<vasil@ludost.net\>
+
+# Chapter one of the example
+
+## Sub-chapter one
+
+###
+#### Sub-chapter one
+
+* An example for a heading in the presentation
+
+<!--
+This slide shows an example of a intermediate heading in the presentation - it takes the whole slide and is a good reference point for both you and your listeners.
+-->
+
+### Something 1/10
+
+* Hello
+    * world
+* Simple bullet points
+
+### Something other
+
+* Again bullet points
+
+## Sub-chapter two
+
+### Sub-chapter two
+
+* Here we didn't insert the full-page header
+* We just started with the text
+* Sometimes this works better
+
+### Source code
+
+~~~~~~C
+#include <stdio.h>
+
+int main(int argc, char **argv) {
+	printf("hello world");
+	return 0;
+}
+~~~~~~
+
+* This is how we put code in (preformated)
+
+# Chapter two
+
+## Chapter two
+
+###
+#### Chapter two
+* No sub-chapters
+* One image
+
+###
+
+![happycat](happycat.png)
+
+### Image processing
+
+* The image will be padded on both sides to be displayed properly
+* The Makefile will generate the dependencies for this pandoc automatically
+* Example:
+
+~~~~~~makefile
+example.pdf: happycat.png
+~~~~~~
+
+### That's all
+
+* Any questions should go to the author.
