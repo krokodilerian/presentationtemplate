@@ -1,4 +1,4 @@
-<?
+<?php
 
 if ($argc!=2) {
 	echo "Usage: {$argv[0]} filename\n";
@@ -21,7 +21,7 @@ while (!feof($fp)) {
 //	echo "DBG: st:$state sl:$slide  $row";
 
 	if ($state==ST_OUT) {
-		if ($row[0] == '#') {
+		if (preg_match('/^###[^#]/', $row)) {
 			$slidetitle = preg_replace('/^[# ]*/','', $row);
 			$slidetitle = str_replace(array("\n", "\r"), '', $slidetitle);
 			$slide++;
